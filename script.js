@@ -70,6 +70,7 @@ const winning_screen = document.getElementById("winner_screen");
 const winning_screen_content = document.querySelector(
   "#winner_screen .content"
 );
+const replay_button = document.getElementById("replayButton");
 console.log(winning_screen_content);
 let p1_name = prompt("Enter player 1 name");
 let p2_name = prompt("Enter player 2 name");
@@ -91,16 +92,19 @@ for (
       currPlayer = Game.switchTurn(currPlayer, p1, p2);
       let winner = Game.findWinner(p1, p2);
       if (winner != "") {
-        console.log(winner);
-        Game.reset(gameboard_container);
         winning_screen_content.textContent = `Winner is ${winner}`;
         winning_screen.classList.add("active");
       }
       if (Game.over()) {
-        Game.reset(gameboard_container);
         winning_screen_content.textContent = `IT IS A TIE`;
         winning_screen.classList.add("active");
       }
     });
   }
 }
+
+replay_button.addEventListener("click", () => {
+  Game.reset(gameboard_container);
+  currPlayer = p1;
+  winning_screen.classList.remove("active");
+});

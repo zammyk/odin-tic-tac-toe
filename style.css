@@ -19,4 +19,5 @@ html {
 #gameboard_container > div {
   height: auto;
   width: auto;
+  border: black 1px solid;
 }

@@ -8,17 +8,41 @@ html {
   height: 100%;
 }
 
+#main {
+  background-color: white;
+  height: 100%;
+  width: 100%;
+
+  position: absolute;
+}
+
 #gameboard_container {
-  position: relative;
   height: 500px;
   width: 500px;
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
+
+  position: relative;
+  z-index: 1;
 }
 
 #gameboard_container > div {
   height: auto;
   width: auto;
   border: black 1px solid;
+}
+
+#winner_screen {
+  background-color: red;
+  height: 100%;
+  width: 100%;
+
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+
+.active {
+  z-index: 10 !important;
 }

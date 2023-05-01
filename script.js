@@ -12,9 +12,10 @@ const Game = (() => {
     return a == b && b == c;
   };
   const playTurn = (player, cell) => {
-    if (gameboard[cell.row][cell.col] != "") return;
+    if (gameboard[cell.row][cell.col] != "") return false;
     gameboard[cell.row][cell.col] = player.symbol;
     cell.textContent = player.symbol;
+    return true;
   };
   const switchTurn = (currPlayer, p1, p2) => (currPlayer == p1 ? p2 : p1);
   const findWinner = (p1, p2) => {
@@ -65,6 +66,11 @@ const Game = (() => {
 })(document);
 
 const gameboard_container = document.getElementById("gameboard_container");
+const winning_screen = document.getElementById("winner_screen");
+const winning_screen_content = document.querySelector(
+  "#winner_screen .content"
+);
+console.log(winning_screen_content);
 let p1_name = prompt("Enter player 1 name");
 let p2_name = prompt("Enter player 2 name");
 let p1 = Player(p1_name, "X");
@@ -81,16 +87,19 @@ for (
     child.col = counter % 3;
     counter++;
     child.addEventListener("click", () => {
-      Game.playTurn(currPlayer, child);
+      if (!Game.playTurn(currPlayer, child)) return;
       currPlayer = Game.switchTurn(currPlayer, p1, p2);
       let winner = Game.findWinner(p1, p2);
       if (winner != "") {
         console.log(winner);
         Game.reset(gameboard_container);
+        winning_screen_content.textContent = `Winner is ${winner}`;
+        winning_screen.classList.add("active");
       }
       if (Game.over()) {
-        console.log("TIE");
         Game.reset(gameboard_container);
+        winning_screen_content.textContent = `IT IS A TIE`;
+        winning_screen.classList.add("active");
       }
     });
   }

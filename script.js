@@ -14,7 +14,9 @@ const Game = (() => {
   const playTurn = (player, cell) => {
     if (gameboard[cell.row][cell.col] != "") return false;
     gameboard[cell.row][cell.col] = player.symbol;
-    cell.textContent = player.symbol;
+    let div = document.createElement("div");
+    div.textContent = player.symbol;
+    cell.appendChild(div);
     return true;
   };
   const switchTurn = (currPlayer, p1, p2) => (currPlayer == p1 ? p2 : p1);

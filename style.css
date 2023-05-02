@@ -43,6 +43,16 @@ html {
   z-index: -1;
 }
 
+#landing_page {
+  background-color: green;
+  height: 100%;
+  width: 100%;
+
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+
 .active {
   z-index: 10 !important;
 }

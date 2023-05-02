@@ -67,13 +67,15 @@ const Game = (() => {
 
 const gameboard_container = document.getElementById("gameboard_container");
 const winning_screen = document.getElementById("winner_screen");
+const landing_page = document.getElementById("landing_page");
 const winning_screen_content = document.querySelector(
   "#winner_screen .content"
 );
 const replay_button = document.getElementById("replayButton");
+const submission_button = document.getElementById("submission_button");
 console.log(winning_screen_content);
-let p1_name = prompt("Enter player 1 name");
-let p2_name = prompt("Enter player 2 name");
+let p1_name = document.getElementById("p1").value;
+let p2_name = document.getElementById("p2").value;
 let p1 = Player(p1_name, "X");
 let p2 = Player(p2_name, "O");
 let currPlayer = p1;
@@ -108,3 +110,17 @@ replay_button.addEventListener("click", () => {
   currPlayer = p1;
   winning_screen.classList.remove("active");
 });
+
+submission_button.addEventListener("click", (e) => {
+  e.preventDefault();
+  p1_name = document.getElementById("p1").value;
+  p2_name = document.getElementById("p2").value;
+  p1 = Player(p1_name, "X");
+  p2 = Player(p2_name, "O");
+  currPlayer = p1;
+  landing_page.classList.remove("active");
+});
+
+window.onload = (event) => {
+  landing_page.classList.add("active");
+};

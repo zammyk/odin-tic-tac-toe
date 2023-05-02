@@ -42,7 +42,6 @@ html {
   /* display: flex;
   align-items: center;
   justify-content: center; */
-
   position: relative;
 }
 
@@ -66,13 +65,45 @@ html {
 }
 
 #landing_page {
-  background-color: green;
+  background-image: url("");
   height: 100%;
   width: 100%;
 
   position: absolute;
   top: 0;
   z-index: -1;
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#landing_page form {
+  background-color: rgb(194, 194, 194);
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 500px;
+  border: 2.5px black solid;
+  border-radius: 1rem;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+#landing_page form > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  align-items: center;
+}
+
+#landing_page form > div > input {
+  font-size: 2rem;
+  width: 300px;
 }
 
 .active {
@@ -90,4 +121,13 @@ html {
   justify-content: center;
   align-items: center;
   font-size: 4rem;
+}
+
+button {
+  width: 200px;
+  font-size: 1.5rem;
+}
+
+form button {
+  margin-top: 20px;
 }

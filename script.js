@@ -120,17 +120,17 @@ for (
     child.addEventListener("click", () => {
       if (!Game.playTurn(currPlayer, child)) return;
       currPlayer = Game.switchTurn(currPlayer, p1, p2);
-      if (currPlayer.isAI) {
+      if (currPlayer.isAI && !(Game.findWinner(p1, p2) != "" || Game.over())) {
         Game.playTurn(currPlayer, Game.AI_child());
-        currPlayer = Game.switchTurn(currPlayer, p1, p2);
+        if (!(Game.findWinner(p1, p2) != "" || Game.over()))
+          currPlayer = Game.switchTurn(currPlayer, p1, p2);
       }
       player_turn.textContent = `${currPlayer.name}'s turn`;
       let winner = Game.findWinner(p1, p2);
       if (winner != "") {
         winning_screen_content.textContent = `Winner is "${winner}"`;
         winning_screen.classList.add("active");
-      }
-      if (Game.over()) {
+      } else if (Game.over()) {
         winning_screen_content.textContent = `IT IS A TIE`;
         winning_screen.classList.add("active");
       }
@@ -141,6 +141,10 @@ for (
 replay_button.addEventListener("click", () => {
   Game.reset(gameboard_container);
   currPlayer = Game.firstPlayer;
+  if (currPlayer.isAI) {
+    Game.playTurn(currPlayer, Game.AI_child());
+    currPlayer = Game.switchTurn(currPlayer, p1, p2);
+  }
   player_turn.textContent = `${currPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
 });
@@ -170,7 +174,11 @@ switch_side_button.addEventListener("click", (e) => {
   p2.symbol =
     p2.symbol == p1.symbol ? (p1.symbol == "X" ? "O" : "X") : p2.symbol;
   currPlayer = Game.firstPlayer;
-  player_turn.textContent = `${Game.firstPlayer.name}'s turn`;
+  if (currPlayer.isAI) {
+    Game.playTurn(currPlayer, Game.AI_child());
+    currPlayer = Game.switchTurn(currPlayer, p1, p2);
+  }
+  player_turn.textContent = `${currPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
 });
 

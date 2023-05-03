@@ -54,17 +54,8 @@ html {
   transform: translate(-50%, -50%);
 }
 
+#landing_page,
 #winner_screen {
-  background-color: red;
-  height: 100%;
-  width: 100%;
-
-  position: absolute;
-  top: 0;
-  z-index: -1;
-}
-
-#landing_page {
   background-image: url("");
   height: 100%;
   width: 100%;
@@ -78,8 +69,17 @@ html {
   justify-content: center;
 }
 
+#winner_screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  gap: 2rem;
+}
+
 #landing_page form {
-  background-color: rgb(194, 194, 194);
+  background-color: rgba(128, 128, 128, 0.5);
   font-size: 2rem;
   display: flex;
   flex-direction: column;

@@ -96,7 +96,7 @@ for (
       currPlayer = Game.switchTurn(currPlayer, p1, p2);
       let winner = Game.findWinner(p1, p2);
       if (winner != "") {
-        winning_screen_content.textContent = `Winner is ${winner}`;
+        winning_screen_content.textContent = `Winner is "${winner}"`;
         winning_screen.classList.add("active");
       }
       if (Game.over()) {

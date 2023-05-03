@@ -75,6 +75,8 @@ const winning_screen_content = document.querySelector(
 );
 const replay_button = document.getElementById("replayButton");
 const submission_button = document.getElementById("submission_button");
+const switch_side_button = document.getElementById("switchSideButton");
+const player_turn = document.querySelector(".player_turn");
 console.log(winning_screen_content);
 let p1_name = document.getElementById("p1").value;
 let p2_name = document.getElementById("p2").value;
@@ -94,6 +96,7 @@ for (
     child.addEventListener("click", () => {
       if (!Game.playTurn(currPlayer, child)) return;
       currPlayer = Game.switchTurn(currPlayer, p1, p2);
+      player_turn.textContent = `${currPlayer.name}'s turn`;
       let winner = Game.findWinner(p1, p2);
       if (winner != "") {
         winning_screen_content.textContent = `Winner is "${winner}"`;
@@ -121,6 +124,15 @@ submission_button.addEventListener("click", (e) => {
   p2 = Player(p2_name, "O");
   currPlayer = p1;
   landing_page.classList.remove("active");
+  player_turn.textContent = `${currPlayer.name}'s turn`;
+});
+
+switch_side_button.addEventListener("click", (e) => {
+  Game.reset(gameboard_container);
+  p1.symbol = "O";
+  p2.symbol = "X";
+  player_turn.textContent = `${currPlayer.name}'s turn`;
+  winning_screen.classList.remove("active");
 });
 
 window.onload = (event) => {

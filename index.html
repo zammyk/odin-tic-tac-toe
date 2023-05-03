@@ -12,6 +12,7 @@
       <div id="homepage">
         <div class="header">
           <div>Tic-Tac-Toe</div>
+          <div class="player_turn"></div>
         </div>
         <div id="gameboard_container">
           <div></div>
@@ -27,10 +28,25 @@
       </div>
       <div id="winner_screen">
         <div class="content"></div>
-        <button id="replayButton">Replay?</button>
+        <div>
+          <button id="replayButton">Replay?</button>
+          <button id="switchSideButton">Switch Sides</button>
+        </div>
       </div>
       <div id="landing_page">
         <form>
+          <!-- <div>
+            <input
+              type="radio"
+              id="two_player_game"
+              name="game_type"
+              value="2P"
+              checked
+            />
+            <label for="two_player_game">2 Player</label><br />
+            <input type="radio" id="ai_game" name="game_type" value="AI" />
+            <label for="ai_game">vs AI</label><br />
+          </div> -->
           <div>
             <label for="p1">Player 1:</label>
             <input type="text" id="p1" required />

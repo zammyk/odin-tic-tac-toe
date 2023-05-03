@@ -78,8 +78,15 @@ html {
   gap: 2rem;
 }
 
+#winner_screen > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
 #landing_page form {
-  background-color: rgba(128, 128, 128, 0.5);
+  background-color: rgba(106, 105, 105, 0.75);
   font-size: 2rem;
   display: flex;
   flex-direction: column;
@@ -101,7 +108,7 @@ html {
   align-items: center;
 }
 
-#landing_page form > div > input {
+#landing_page form > div > input[type="text"] {
   font-size: 2rem;
   width: 300px;
 }
@@ -121,6 +128,12 @@ html {
   justify-content: center;
   align-items: center;
   font-size: 4rem;
+}
+
+.header .player_turn {
+  position: absolute;
+  font-size: 2rem;
+  left: 75%;
 }
 
 button {

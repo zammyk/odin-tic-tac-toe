@@ -1,5 +1,5 @@
-const Player = (name, symbol) => {
-  return { name, symbol };
+const Player = (name, symbol, isAI) => {
+  return { name, symbol, isAI };
 };
 
 const Game = (() => {
@@ -13,6 +13,7 @@ const Game = (() => {
     return a == b && b == c;
   };
   const playTurn = (player, cell) => {
+    if (cell == null) return p1.isAI || p2.isAI;
     if (gameboard[cell.row][cell.col] != "") return false;
     gameboard[cell.row][cell.col] = player.symbol;
     let div = document.createElement("div");
@@ -46,6 +47,21 @@ const Game = (() => {
       return gameboard[0][2] == p1.symbol ? p1.name : p2.name;
     return "";
   };
+  const AI_child = () => {
+    let possibleChildren = [];
+    for (
+      let child = gameboard_container.firstChild, counter = 0;
+      child !== null;
+      child = child.nextSibling
+    ) {
+      if (child.tagName == "DIV" && child.childNodes.length == 0)
+        possibleChildren.push(child);
+    }
+    if (possibleChildren.length == 0) return null;
+    return possibleChildren[
+      Math.floor(Math.random() * possibleChildren.length)
+    ];
+  };
   const reset = (gameboard_container) => {
     for (let row = 0; row < 3; row++)
       for (let col = 0; col < 3; col++) gameboard[row][col] = "";
@@ -65,7 +81,15 @@ const Game = (() => {
       for (let col = 0; col < 3; col++) countEmpty += gameboard[row][col] == "";
     return countEmpty == 0;
   };
-  return { playTurn, switchTurn, findWinner, reset, over, firstPlayer };
+  return {
+    playTurn,
+    switchTurn,
+    findWinner,
+    reset,
+    over,
+    firstPlayer,
+    AI_child,
+  };
 })(document);
 
 const gameboard_container = document.getElementById("gameboard_container");
@@ -81,8 +105,7 @@ const player_turn = document.querySelector(".player_turn");
 console.log(winning_screen_content);
 let p1_name = document.getElementById("p1").value;
 let p2_name = document.getElementById("p2").value;
-let p1 = Player(p1_name, "X");
-let p2 = Player(p2_name, "O");
+let p1, p2;
 let currPlayer = p1;
 
 for (
@@ -97,6 +120,10 @@ for (
     child.addEventListener("click", () => {
       if (!Game.playTurn(currPlayer, child)) return;
       currPlayer = Game.switchTurn(currPlayer, p1, p2);
+      if (currPlayer.isAI) {
+        Game.playTurn(currPlayer, Game.AI_child());
+        currPlayer = Game.switchTurn(currPlayer, p1, p2);
+      }
       player_turn.textContent = `${currPlayer.name}'s turn`;
       let winner = Game.findWinner(p1, p2);
       if (winner != "") {
@@ -123,15 +150,15 @@ submission_button.addEventListener("click", (e) => {
   if (document.getElementById("two_player_game").checked) {
     p1_name = document.getElementById("p1").value;
     p2_name = document.getElementById("p2").value;
-    p1 = Player(p1_name, "X");
-    p2 = Player(p2_name, "O");
-    Game.firstPlayer = p1;
+    p1 = Player(p1_name, "X", false);
+    p2 = Player(p2_name, "O", false);
   } else {
     p1_name = document.getElementById("p1").value;
-    p1 = Player(p1_name, "X");
-    p2 = Player("AI", "O");
+    p1 = Player(p1_name, "X", false);
+    p2 = Player("AI", "O", true);
   }
   currPlayer = p1;
+  Game.firstPlayer = p1;
   landing_page.classList.remove("active");
   player_turn.textContent = `${currPlayer.name}'s turn`;
 });

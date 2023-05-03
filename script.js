@@ -8,6 +8,7 @@ const Game = (() => {
     ["", "", ""],
     ["", "", ""],
   ];
+  let firstPlayer;
   const isEqual = (a, b, c) => {
     return a == b && b == c;
   };
@@ -64,7 +65,7 @@ const Game = (() => {
       for (let col = 0; col < 3; col++) countEmpty += gameboard[row][col] == "";
     return countEmpty == 0;
   };
-  return { playTurn, switchTurn, findWinner, reset, over };
+  return { playTurn, switchTurn, findWinner, reset, over, firstPlayer };
 })(document);
 
 const gameboard_container = document.getElementById("gameboard_container");
@@ -112,16 +113,24 @@ for (
 
 replay_button.addEventListener("click", () => {
   Game.reset(gameboard_container);
-  currPlayer = p1;
+  currPlayer = Game.firstPlayer;
+  player_turn.textContent = `${currPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
 });
 
 submission_button.addEventListener("click", (e) => {
   e.preventDefault();
-  p1_name = document.getElementById("p1").value;
-  p2_name = document.getElementById("p2").value;
-  p1 = Player(p1_name, "X");
-  p2 = Player(p2_name, "O");
+  if (document.getElementById("two_player_game").checked) {
+    p1_name = document.getElementById("p1").value;
+    p2_name = document.getElementById("p2").value;
+    p1 = Player(p1_name, "X");
+    p2 = Player(p2_name, "O");
+    Game.firstPlayer = p1;
+  } else {
+    p1_name = document.getElementById("p1").value;
+    p1 = Player(p1_name, "X");
+    p2 = Player("AI", "O");
+  }
   currPlayer = p1;
   landing_page.classList.remove("active");
   player_turn.textContent = `${currPlayer.name}'s turn`;
@@ -129,10 +138,21 @@ submission_button.addEventListener("click", (e) => {
 
 switch_side_button.addEventListener("click", (e) => {
   Game.reset(gameboard_container);
-  p1.symbol = "O";
-  p2.symbol = "X";
-  player_turn.textContent = `${currPlayer.name}'s turn`;
+  Game.firstPlayer = Game.firstPlayer == p1 ? p2 : p1;
+  p1.symbol = Game.firstPlayer == p1 ? "X" : "O";
+  p2.symbol =
+    p2.symbol == p1.symbol ? (p1.symbol == "X" ? "O" : "X") : p2.symbol;
+  currPlayer = Game.firstPlayer;
+  player_turn.textContent = `${Game.firstPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
+});
+
+document.getElementById("ai_game").addEventListener("click", () => {
+  document.getElementById("p2").disabled = true;
+});
+
+document.getElementById("two_player_game").addEventListener("click", () => {
+  document.getElementById("p2").disabled = false;
 });
 
 window.onload = (event) => {

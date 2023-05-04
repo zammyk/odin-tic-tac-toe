@@ -82,6 +82,8 @@ const Game = (() => {
     return countEmpty == 0;
   };
   return {
+    gameboard,
+    isEqual,
     playTurn,
     switchTurn,
     findWinner,
@@ -91,6 +93,91 @@ const Game = (() => {
     AI_child,
   };
 })(document);
+
+const AI = (() => {
+  let copiedGameboard;
+  let findBestMove = (gameboard, AIsSymbol) => {
+    copiedGameboard = JSON.parse(JSON.stringify(gameboard));
+    let result = minmax(true, AIsSymbol, copiedGameboard);
+    return result.bestRow * 3 + result.bestCol;
+  };
+  function minmax(AIsMove, AIsSymbol) {
+    let winnerSymbol = gameWinnerSymbol(copiedGameboard);
+    let val = AIsMove ? -10 : 10;
+    let bestRow, bestCol;
+    if (winnerSymbol != "" || boardFilled(copiedGameboard)) {
+      if (winnerSymbol == AIsSymbol) val = 1;
+      else if (winnerSymbol != "") val = -1;
+      else val = 0;
+      return { bestRow, bestCol, val };
+    }
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        if (copiedGameboard[row][col] == "") {
+          copiedGameboard[row][col] = AIsMove
+            ? AIsSymbol
+            : AIsSymbol == "X"
+            ? "O"
+            : "X";
+          let currPoints = minmax(!AIsMove, AIsSymbol).val;
+          if ((AIsMove && currPoints > val) || (!AIsMove && currPoints < val)) {
+            val = currPoints;
+            bestRow = row;
+            bestCol = col;
+          }
+          copiedGameboard[row][col] = "";
+        }
+      }
+    }
+    return { bestRow, bestCol, val };
+  }
+  function gameWinnerSymbol(gameboard) {
+    for (let i = 0; i < 3; i++) {
+      if (
+        Game.isEqual(gameboard[i][0], gameboard[i][1], gameboard[i][2]) &&
+        gameboard[i][0] != ""
+      )
+        return gameboard[i][0];
+      if (
+        Game.isEqual(gameboard[0][i], gameboard[1][i], gameboard[2][i]) &&
+        gameboard[0][i] != ""
+      )
+        return gameboard[0][i];
+    }
+    if (
+      Game.isEqual(gameboard[0][0], gameboard[1][1], gameboard[2][2]) &&
+      gameboard[0][0] != ""
+    )
+      return gameboard[0][0];
+    if (
+      Game.isEqual(gameboard[0][2], gameboard[1][1], gameboard[2][0]) &&
+      gameboard[0][2] != ""
+    )
+      return gameboard[0][2];
+    return "";
+  }
+  function boardFilled(gameboard) {
+    let countEmpty = 0;
+    for (let row = 0; row < 3; row++)
+      for (let col = 0; col < 3; col++) countEmpty += gameboard[row][col] == "";
+    return countEmpty == 0;
+  }
+  return { findBestMove };
+})();
+
+function nthDivChild(n, container) {
+  for (
+    let child = container.firstChild, counter = 0;
+    child !== null;
+    child = child.nextSibling
+  ) {
+    if (child.tagName == "DIV") {
+      if (n == counter) return child;
+      counter++;
+    }
+  }
+  return null;
+}
 
 const gameboard_container = document.getElementById("gameboard_container");
 const winning_screen = document.getElementById("winner_screen");
@@ -121,7 +208,13 @@ for (
       if (!Game.playTurn(currPlayer, child)) return;
       currPlayer = Game.switchTurn(currPlayer, p1, p2);
       if (currPlayer.isAI && !(Game.findWinner(p1, p2) != "" || Game.over())) {
-        Game.playTurn(currPlayer, Game.AI_child());
+        Game.playTurn(
+          currPlayer,
+          nthDivChild(
+            AI.findBestMove(Game.gameboard, currPlayer.symbol),
+            gameboard_container
+          )
+        );
         if (!(Game.findWinner(p1, p2) != "" || Game.over()))
           currPlayer = Game.switchTurn(currPlayer, p1, p2);
       }
@@ -142,7 +235,13 @@ replay_button.addEventListener("click", () => {
   Game.reset(gameboard_container);
   currPlayer = Game.firstPlayer;
   if (currPlayer.isAI) {
-    Game.playTurn(currPlayer, Game.AI_child());
+    Game.playTurn(
+      currPlayer,
+      nthDivChild(
+        AI.findBestMove(Game.gameboard, currPlayer.symbol),
+        gameboard_container
+      )
+    );
     currPlayer = Game.switchTurn(currPlayer, p1, p2);
   }
   player_turn.textContent = `${currPlayer.name}'s turn`;
@@ -175,7 +274,13 @@ switch_side_button.addEventListener("click", (e) => {
     p2.symbol == p1.symbol ? (p1.symbol == "X" ? "O" : "X") : p2.symbol;
   currPlayer = Game.firstPlayer;
   if (currPlayer.isAI) {
-    Game.playTurn(currPlayer, Game.AI_child());
+    Game.playTurn(
+      currPlayer,
+      nthDivChild(
+        AI.findBestMove(Game.gameboard, currPlayer.symbol),
+        gameboard_container
+      )
+    );
     currPlayer = Game.switchTurn(currPlayer, p1, p2);
   }
   player_turn.textContent = `${currPlayer.name}'s turn`;

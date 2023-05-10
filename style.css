@@ -156,6 +156,16 @@ button {
   font-size: 1.5rem;
 }
 
+.button:hover {
+  background-color: #a2a8d3;
+}
+
+.button:active {
+  background-color: #a2a8d3;
+  box-shadow: 0 5px #38598b;
+  transform: translateY(4px);
+}
+
 form button {
   margin-top: 20px;
 }

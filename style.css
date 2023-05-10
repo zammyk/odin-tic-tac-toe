@@ -36,7 +36,7 @@ fourth color = #113f67 */
 #gameboard_container > div {
   height: auto;
   width: auto;
-  border: black 1px solid;
+  border: #113f67 1.5px solid;
   border-radius: 1rem;
   /* display: flex;
   align-items: center;
@@ -68,6 +68,7 @@ fourth color = #113f67 */
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #113f67;
 }
 
 #winner_screen {
@@ -121,6 +122,7 @@ fourth color = #113f67 */
 
 #landing_page form > #submission_button {
   background-color: #e7eaf6;
+  color: #113f67;
 }
 
 .active {
@@ -149,7 +151,6 @@ fourth color = #113f67 */
   left: 75%;
 }
 
-
 button {
   width: 200px;
   font-size: 1.5rem;
@@ -159,6 +160,11 @@ form button {
   margin-top: 20px;
 }
 
+#replayButton #switchSideButton {
+  color: #113f67;
+  background-color: #e7eaf6;
+}
+
 @media screen and (max-width: 2000px) {
   .header {
     display: flex;
@@ -166,15 +172,21 @@ form button {
     justify-content: space-around;
     height: 15vh;
     width: 100vw;
+    color: #113f67;
   }
 
   .header #page_heading {
     height: 7vh;
     font-size: 8vh;
+    color: #113f67;
   }
   
   .header .player_turn {
     position: unset;
     font-size: 5vh;
+    color: #113f67;
+  }
+  #landing_page #winner_screen {
+    color: #113f67;
   }
 }

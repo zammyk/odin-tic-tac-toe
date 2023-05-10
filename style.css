@@ -3,16 +3,20 @@
   margin: 0;
 }
 
+/* first color = #e7eaf6
+second color = #a2a8d3
+third color = #38598b
+fourth color = #113f67 */
+
 body,
 html {
   height: 100%;
 }
 
 #main {
-  background-color: white;
-  height: 100%;
-  width: 100%;
-
+  background-color: #e7eaf6;
+  height: 100vh;
+  width: 100vw;
   position: absolute;
 }
 
@@ -43,6 +47,7 @@ html {
   align-items: center;
   justify-content: center; */
   position: relative;
+  background-color: #a2a8d3;
 }
 
 #gameboard_container > div > div {
@@ -52,6 +57,7 @@ html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: #113f67;
 }
 
 #landing_page,
@@ -85,8 +91,12 @@ html {
   gap: 3rem;
 }
 
+#winner_screen > button {
+  background-color: #e7eaf6;
+}
+
 #landing_page form {
-  background-color: rgba(106, 105, 105, 0.75);
+  background-color: #a2a8d3;
   font-size: 2rem;
   display: flex;
   flex-direction: column;
@@ -111,6 +121,11 @@ html {
 #landing_page form > div > input[type="text"] {
   font-size: 2rem;
   width: 300px;
+  background-color: #e7eaf6;
+}
+
+#landing_page form > #submission_button {
+  background-color: #e7eaf6;
 }
 
 .active {
@@ -121,9 +136,9 @@ html {
   position: relative;
   top: 0;
 
-  height: 100px;
-  width: 100%;
-  background-color: pink;
+  height: 10vw;
+  width: 100vw;
+  background-color: #a2a8d3;
   display: flex;
   justify-content: center;
   align-items: center;

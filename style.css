@@ -3,16 +3,15 @@
   margin: 0;
 }
 
-body,
-html {
-  height: 100%;
-}
+/* first color = #e7eaf6
+second color = #a2a8d3
+third color = #38598b
+fourth color = #113f67 */
 
 #main {
-  background-color: white;
-  height: 100%;
-  width: 100%;
-
+  background-color: #e7eaf6;
+  height: 100vh;
+  width: 100vw;
   position: absolute;
 }
 
@@ -23,9 +22,9 @@ html {
 }
 
 #gameboard_container {
-  margin-top: 100px;
-  height: 500px;
-  width: 500px;
+  margin-top: 12vh;
+  height: min(60vh, 60vw);
+  width: min(60vh, 60vw);
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
@@ -37,21 +36,28 @@ html {
 #gameboard_container > div {
   height: auto;
   width: auto;
-  border: black 1px solid;
+  border: #113f67 1.5px solid;
   border-radius: 1rem;
   /* display: flex;
   align-items: center;
   justify-content: center; */
   position: relative;
+  background-color: #a2a8d3;
+}
+
+#gameboard_container > div:active {
+  background-color: #a2a8d3;
+  box-shadow: inset 4px 4px 12px #a2a8d3, inset -4px -4px 12px #38598b;
 }
 
 #gameboard_container > div > div {
-  font-size: 10rem;
+  font-size: min(15vh,15vw);
   position: absolute;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: #113f67;
 }
 
 #landing_page,
@@ -67,6 +73,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #113f67;
 }
 
 #winner_screen {
@@ -86,18 +93,19 @@ html {
 }
 
 #landing_page form {
-  background-color: rgba(106, 105, 105, 0.75);
+  background-color: #a2a8d3;
   font-size: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 300px;
-  width: 500px;
+  height: 17rem;
+  width: 30rem;
   border: 2.5px black solid;
   border-radius: 1rem;
   gap: 1rem;
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 #landing_page form > div {
@@ -109,8 +117,30 @@ html {
 }
 
 #landing_page form > div > input[type="text"] {
+  width: inherit;
   font-size: 2rem;
-  width: 300px;
+  background-color: #e7eaf6;
+  border-radius: 15px;
+  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+  text-align: center;
+  transition: 300ms ease-in-out;
+}
+
+input[type="text"]:focus {
+  background-color: white;
+  transform: scale(1.05);
+  box-shadow: 13px 13px 100px #969696,
+             -13px -13px 100px #ffffff;
+}
+
+/* for chrome, mozilla, and opera browsers */
+#landing_page form > div > input[type="text"]::placeholder {
+  text-align: center;
+}
+
+/* for internet explorer and microsoft edge */
+#landing_page form > div > input[type="text"]:-ms-input-placeholder {
+  text-align: center;
 }
 
 .active {
@@ -121,26 +151,104 @@ html {
   position: relative;
   top: 0;
 
-  height: 100px;
-  width: 100%;
-  background-color: pink;
+  height: 15vh;
+  width: 100vw;
+  background-color: #a2a8d3;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 4rem;
+  color: #113f67;
+}
+
+.header #page_heading {
+  font-size: 12vh;
 }
 
 .header .player_turn {
   position: absolute;
-  font-size: 2rem;
+  font-size: 6vh;
   left: 75%;
 }
 
 button {
   width: 200px;
   font-size: 1.5rem;
+  color: #113f67;
+  background-image: linear-gradient(135deg, #d0d7f3 40%, #b3d2ee);
+  border-radius: 0.5rem;
+  transition: all .3s;
+  box-shadow: 6px 6px 12px, -6px -6px 12px;
+  cursor: pointer;
+}
+
+.button:hover {
+  transition: 0.4s;
+  border: 2px dashed black;
+  color: #11d479;
+}
+
+.button:active {
+  background-color: #a2a8d3;
+  box-shadow: inset 4px 4px 12px #a2a8d3, inset -4px -4px 12px #38598b;
 }
 
 form button {
   margin-top: 20px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media screen and (max-width: 768px) {
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 15vh;
+    width: 100vw;
+    color: #113f67;
+  }
+
+  .header #page_heading {
+    height: 7vh;
+    font-size: 8vh;
+    color: #113f67;
+  }
+  
+  .header .player_turn {
+    position: unset;
+    font-size: 5vh;
+    color: #113f67;
+  }
+
+  #landing_page #winner_screen {
+    color: #113f67;
+  }
+
+  #landing_page form{
+    height: 19rem;
+    width: 22rem;
+  }
+
+  #landing_page form div {
+    gap: 1rem;
+  }
+
+  #winner_screen {
+    font-size: 3rem;
+  }
+
+  #winner_screen > div {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* for very small screen devices (Galaxy Fold )*/
+@media screen and (max-width: 320px) {
+  #landing_page form {
+    width: 20rem;
+  }
+
+  #landing_page form div {
+    gap: 0.5rem;
+  }
 }

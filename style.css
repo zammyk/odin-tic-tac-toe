@@ -112,10 +112,20 @@ fourth color = #113f67 */
 }
 
 #landing_page form > div > input[type="text"] {
+  width: inherit;
   font-size: 2rem;
   background-color: #e7eaf6;
+  border-radius: 15px;
+  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
   text-align: center;
-  width: inherit;
+  transition: 300ms ease-in-out;
+}
+
+input[type="text"]:focus {
+  background-color: white;
+  transform: scale(1.05);
+  box-shadow: 13px 13px 100px #969696,
+             -13px -13px 100px #ffffff;
 }
 
 /* for chrome, mozilla, and opera browsers */
@@ -142,6 +152,7 @@ fourth color = #113f67 */
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #113f67;
 }
 
 .header #page_heading {
@@ -181,7 +192,7 @@ form button {
 }
 
 /* Extra small devices (phones, 600px and down) */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .header {
     display: flex;
     flex-direction: column;

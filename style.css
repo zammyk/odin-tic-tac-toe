@@ -45,6 +45,11 @@ fourth color = #113f67 */
   background-color: #a2a8d3;
 }
 
+#gameboard_container > div:active {
+  background-color: #a2a8d3;
+  box-shadow: inset 4px 4px 12px #a2a8d3, inset -4px -4px 12px #38598b;
+}
+
 #gameboard_container > div > div {
   font-size: min(15vh,15vw);
   position: absolute;

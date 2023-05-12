@@ -98,12 +98,13 @@ fourth color = #113f67 */
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 300px;
-  width: 500px;
+  height: 55vh;
+  width: 30rem;
   border: 2.5px black solid;
   border-radius: 1rem;
   gap: 1rem;
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 #landing_page form > div {
@@ -116,8 +117,20 @@ fourth color = #113f67 */
 
 #landing_page form > div > input[type="text"] {
   font-size: 2rem;
-  width: 300px;
+  width: 35vw;
   background-color: #e7eaf6;
+}
+
+#landing_page form > div > input[type="text"]::placeholder {
+  text-align: center;
+}
+
+#landing_page form > div > input[type="text"]:-ms-input-placeholder {
+  text-align: center;
+}
+
+input{
+  text-align: center;
 }
 
 #landing_page form > #submission_button {
@@ -175,7 +188,7 @@ form button {
   background-color: #e7eaf6;
 }
 
-@media screen and (max-width: 2000px) {
+@media screen and (max-width: 600px) {
   .header {
     display: flex;
     flex-direction: column;
@@ -196,7 +209,27 @@ form button {
     font-size: 5vh;
     color: #113f67;
   }
+
   #landing_page #winner_screen {
     color: #113f67;
   }
+
+  #landing_page form{
+    height: 30vh;
+  }
 }
+
+/* Extra small devices (phones, 600px and down) */
+/* @media only screen and (max-width: 600px) {...} */
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* @media only screen and (min-width: 600px) {...} */
+
+/* Medium devices (landscape tablets, 768px and up) */
+/* @media only screen and (min-width: 768px) {...} */
+
+/* Large devices (laptops/desktops, 992px and up) */
+/* @media only screen and (min-width: 992px) {...} */
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+/* @media only screen and (min-width: 1200px) {...} */

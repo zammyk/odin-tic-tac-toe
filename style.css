@@ -87,10 +87,6 @@ fourth color = #113f67 */
   gap: 3rem;
 }
 
-#winner_screen > button {
-  background-color: #e7eaf6;
-}
-
 #landing_page form {
   background-color: #a2a8d3;
   font-size: 2rem;
@@ -122,17 +118,14 @@ fourth color = #113f67 */
   width: inherit;
 }
 
+/* for chrome, mozilla, and opera browsers */
 #landing_page form > div > input[type="text"]::placeholder {
   text-align: center;
 }
 
+/* for internet explorer and microsoft edge */
 #landing_page form > div > input[type="text"]:-ms-input-placeholder {
   text-align: center;
-}
-
-#landing_page form > #submission_button {
-  background-color: #e7eaf6;
-  color: #113f67;
 }
 
 .active {
@@ -164,25 +157,27 @@ fourth color = #113f67 */
 button {
   width: 200px;
   font-size: 1.5rem;
+  color: #113f67;
+  background-image: linear-gradient(135deg, #d0d7f3 40%, #b3d2ee);
+  border-radius: 0.5rem;
+  transition: all .3s;
+  box-shadow: 6px 6px 12px, -6px -6px 12px;
+  cursor: pointer;
 }
 
 .button:hover {
-  background-color: #a2a8d3;
+  transition: 0.4s;
+  border: 2px dashed black;
+  color: #11d479;
 }
 
 .button:active {
   background-color: #a2a8d3;
-  box-shadow: 0 5px #38598b;
-  transform: translateY(4px);
+  box-shadow: inset 4px 4px 12px #a2a8d3, inset -4px -4px 12px #38598b;
 }
 
 form button {
   margin-top: 20px;
-}
-
-#replayButton #switchSideButton {
-  color: #113f67;
-  background-color: #e7eaf6;
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -231,6 +226,7 @@ form button {
   }
 }
 
+/* for very small screen devices (Galaxy Fold )*/
 @media screen and (max-width: 320px) {
   #landing_page form {
     width: 20rem;

@@ -206,6 +206,13 @@ function victoryTiles(first, second, third) {
     [third].classList.add("victory-tile");
 }
 
+function clearGreenTiles() {
+  const victory_tiles = gameboard_container.querySelectorAll(".victory-tile");
+  victory_tiles.forEach((element) => {
+    element.classList.remove("victory-tile");
+  });
+}
+
 const gameboard_container = document.getElementById("gameboard_container");
 const winning_screen = document.getElementById("winner_screen");
 const landing_page = document.getElementById("landing_page");
@@ -275,12 +282,7 @@ replay_button.addEventListener("click", () => {
   winning_screen.classList.remove("active");
 
   //clearing the green tiles
-  const victory_tiles =
-    gameboard_container.getElementsByClassName("victory-tile");
-  victory_tiles.Array.forEach((element) => {
-    element.classList.remove("victory-tile");
-  });
-  console.log(typeof victory_tiles);
+  clearGreenTiles();
 });
 
 submission_button.addEventListener("click", (e) => {
@@ -320,6 +322,8 @@ switch_side_button.addEventListener("click", (e) => {
   }
   player_turn.textContent = `${currPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
+  //clearing the green tiles
+  clearGreenTiles();
 });
 
 document.getElementById("ai_game").addEventListener("click", () => {

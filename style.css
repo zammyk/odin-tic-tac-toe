@@ -38,11 +38,15 @@ fourth color = #113f67 */
   width: auto;
   border: #113f67 1.5px solid;
   border-radius: 1rem;
-  /* display: flex;
+  display: flex;
   align-items: center;
-  justify-content: center; */
+  justify-content: center;
   position: relative;
   background-color: #a2a8d3;
+}
+
+#gameboard_container > .victory-tile {
+  background-color: #11d479;
 }
 
 #gameboard_container > div:active {
@@ -50,7 +54,7 @@ fourth color = #113f67 */
   box-shadow: inset 4px 4px 12px #a2a8d3, inset -4px -4px 12px #38598b;
 }
 
-#gameboard_container > div > div {
+/* #gameboard_container > div > div {
   font-size: min(15vh,15vw);
   position: absolute;
   position: absolute;
@@ -58,7 +62,7 @@ fourth color = #113f67 */
   left: 50%;
   transform: translate(-50%, -50%);
   color: #113f67;
-}
+} */
 
 #landing_page,
 #winner_screen {

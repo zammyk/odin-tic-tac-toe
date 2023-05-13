@@ -18,12 +18,14 @@ const Game = (() => {
     gameboard[cell.row][cell.col] = player.symbol;
     let div = document.createElement("div");
     if (player.symbol == "X") {
-      div.innerHTML = '<img src="/assets/X.png" alt="X" class="symbol">';
+      // div.innerHTML = '<img src="/assets/X.png" alt="X" class="symbol">';
+      cell.innerHTML = '<img src="/assets/X.png" alt="X" class="symbol">';
     } else if (player.symbol == "O") {
-      div.innerHTML = '<img src="/assets/O.png" alt="O" class="symbol">';
+      // div.innerHTML = '<img src="/assets/O.png" alt="O" class="symbol">';
+      cell.innerHTML = '<img src="/assets/O.png" alt="O" class="symbol">';
     }
     // div.textContent = player.symbol;
-    cell.appendChild(div);
+    // cell.appendChild(div);
     return true;
   };
   const switchTurn = (currPlayer, p1, p2) => (currPlayer == p1 ? p2 : p1);
@@ -32,24 +34,32 @@ const Game = (() => {
       if (
         isEqual(gameboard[i][0], gameboard[i][1], gameboard[i][2]) &&
         gameboard[i][0] != ""
-      )
+      ) {
+        victoryTiles(3 * i, 3 * i + 1, 3 * i + 2);
         return gameboard[i][0] == p1.symbol ? p1.name : p2.name;
+      }
       if (
         isEqual(gameboard[0][i], gameboard[1][i], gameboard[2][i]) &&
         gameboard[0][i] != ""
-      )
+      ) {
+        victoryTiles(3 * i, 3 * (i + 1), 3 * (i + 2));
         return gameboard[0][i] == p1.symbol ? p1.name : p2.name;
+      }
     }
     if (
       isEqual(gameboard[0][0], gameboard[1][1], gameboard[2][2]) &&
       gameboard[0][0] != ""
-    )
+    ) {
+      victoryTiles(0, 4, 8);
       return gameboard[0][0] == p1.symbol ? p1.name : p2.name;
+    }
     if (
       isEqual(gameboard[0][2], gameboard[1][1], gameboard[2][0]) &&
       gameboard[0][2] != ""
-    )
+    ) {
+      victoryTiles(2, 4, 6);
       return gameboard[0][2] == p1.symbol ? p1.name : p2.name;
+    }
     return "";
   };
   const AI_child = () => {
@@ -184,6 +194,18 @@ function nthDivChild(n, container) {
   return null;
 }
 
+function victoryTiles(first, second, third) {
+  gameboard_container
+    .getElementsByTagName("div")
+    [first].classList.add("victory-tile");
+  gameboard_container
+    .getElementsByTagName("div")
+    [second].classList.add("victory-tile");
+  gameboard_container
+    .getElementsByTagName("div")
+    [third].classList.add("victory-tile");
+}
+
 const gameboard_container = document.getElementById("gameboard_container");
 const winning_screen = document.getElementById("winner_screen");
 const landing_page = document.getElementById("landing_page");
@@ -251,6 +273,14 @@ replay_button.addEventListener("click", () => {
   }
   player_turn.textContent = `${currPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
+
+  //clearing the green tiles
+  const victory_tiles =
+    gameboard_container.getElementsByClassName("victory-tile");
+  victory_tiles.Array.forEach((element) => {
+    element.classList.remove("victory-tile");
+  });
+  console.log(typeof victory_tiles);
 });
 
 submission_button.addEventListener("click", (e) => {

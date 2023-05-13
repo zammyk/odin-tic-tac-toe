@@ -18,12 +18,11 @@ const Game = (() => {
     gameboard[cell.row][cell.col] = player.symbol;
     let div = document.createElement("div");
     if (player.symbol == "X") {
-      div.innerHTML = '<img src="/assets/X.png">';
+      div.innerHTML = '<img src="/assets/X.png" alt="X" class="symbol">';
     } else if (player.symbol == "O") {
-      div.innerHTML = '<img src="/assets/O.png">';
+      div.innerHTML = '<img src="/assets/O.png" alt="O" class="symbol">';
     }
     // div.textContent = player.symbol;
-    console.log(player.symbol);
     cell.appendChild(div);
     return true;
   };

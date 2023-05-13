@@ -17,7 +17,13 @@ const Game = (() => {
     if (gameboard[cell.row][cell.col] != "") return false;
     gameboard[cell.row][cell.col] = player.symbol;
     let div = document.createElement("div");
-    div.textContent = player.symbol;
+    if (player.symbol == "X") {
+      div.innerHTML = '<img src="/assets/X.png">';
+    } else if (player.symbol == "O") {
+      div.innerHTML = '<img src="/assets/O.png">';
+    }
+    // div.textContent = player.symbol;
+    console.log(player.symbol);
     cell.appendChild(div);
     return true;
   };

@@ -67,7 +67,7 @@ fourth color = #113f67 */
   position: absolute;
   top: 0;
   z-index: -1;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -194,7 +194,7 @@ form button {
   margin-top: 20px;
 }
 
-/* Extra small devices (phones, 600px and down) */
+/* Extra small devices (phones, 768px and down) */
 @media screen and (max-width: 768px) {
   .header {
     display: flex;
@@ -251,11 +251,19 @@ form button {
   }
 }
 
-#line {
+@media screen and (max-width: 426px) {
+  #gameboard_container {
+     height: 15rem;
+     width: 15rem;
+  }
+}
+
+/* For testing the line-crossing animation */
+/* #line {
     position: absolute;
     height: 48vh;
     background-color: black;
     width: 4px;
     transform: translateX(min(10vh)) translateY(18vh);
     z-index: 2;
-}
+} */

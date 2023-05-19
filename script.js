@@ -36,6 +36,8 @@ const Game = (() => {
         gameboard[i][0] != ""
       ) {
         victoryTiles(3 * i, 3 * i + 1, 3 * i + 2);
+        console.log(i, 0);
+        lineAnimation(i, "horizontal");
         return gameboard[i][0] == p1.symbol ? p1.name : p2.name;
       }
       if (
@@ -43,6 +45,8 @@ const Game = (() => {
         gameboard[0][i] != ""
       ) {
         victoryTiles(3 * i, 3 * (i + 1), 3 * (i + 2));
+        console.log(0, i);
+        lineAnimation(i, "vertical");
         return gameboard[0][i] == p1.symbol ? p1.name : p2.name;
       }
     }
@@ -51,6 +55,8 @@ const Game = (() => {
       gameboard[0][0] != ""
     ) {
       victoryTiles(0, 4, 8);
+      console.log("cross");
+      lineAnimation(0, "cross");
       return gameboard[0][0] == p1.symbol ? p1.name : p2.name;
     }
     if (
@@ -58,6 +64,8 @@ const Game = (() => {
       gameboard[0][2] != ""
     ) {
       victoryTiles(2, 4, 6);
+      console.log("reverse cross");
+      lineAnimation(2, "cross");
       return gameboard[0][2] == p1.symbol ? p1.name : p2.name;
     }
     return "";
@@ -213,9 +221,61 @@ function clearGreenTiles() {
   });
 }
 
+function lineAnimation(i, direction) {
+  if (direction === "horizontal") {
+    switch (i) {
+      case 0:
+        line.style =
+          "position: absolute; z-index: 2; height: 4px; width: 48vh; background-color: black; transform: translateX(6vh) translateY(22vh)";
+        break;
+      case 1:
+        line.style =
+          "position: absolute; z-index: 2; height: 4px; width: 48vh; background-color: black; transform: translateX(6vh) translateY(42vh)";
+        break;
+      case 2:
+        line.style =
+          "position: absolute; z-index: 2; height: 4px; width: 48vh; background-color: black; transform: translateX(6vh) translateY(62vh)";
+        break;
+    }
+  } else if (direction === "vertical") {
+    switch (i) {
+      case 0:
+        line.style =
+          "position: absolute; z-index: 2; height: 48vh; width: 4px; background-color: black; transform: translateX(10vh) translateY(18vh)";
+        break;
+      case 1:
+        line.style =
+          "position: absolute; z-index: 2; height: 48vh; width: 4px; background-color: black; transform: translateX(30vh) translateY(18vh)";
+        break;
+      case 2:
+        line.style =
+          "position: absolute; z-index: 2; height: 48vh; width: 4px; background-color: black; transform: translateX(50vh) translateY(18vh)";
+        break;
+    }
+  } else {
+    switch (i) {
+      case 0:
+        line.style =
+          "position: absolute; z-index: 2; height: 63vh; width: 4px; background-color: black; transform: translateX(30vh) translateY(11vh) rotate(135deg);";
+        break;
+      case 2:
+        line.style =
+          "position: absolute; z-index: 2; height: 68vh; width: 4px; background-color: black; transform: translateX(30vh) translateY(8vh) rotate(45deg);";
+        break;
+    }
+  }
+}
+
+const removeAttributes = (line) => {
+  while (line.attributes.length > 0) {
+    line.removeAttribute(line.attributes[0].name);
+  }
+};
+
 const gameboard_container = document.getElementById("gameboard_container");
 const winning_screen = document.getElementById("winner_screen");
 const landing_page = document.getElementById("landing_page");
+const line = document.getElementById("line");
 const winning_screen_content = document.querySelector(
   "#winner_screen .content"
 );
@@ -283,6 +343,7 @@ replay_button.addEventListener("click", () => {
 
   //clearing the green tiles
   clearGreenTiles();
+  removeAttributes(line);
 });
 
 submission_button.addEventListener("click", (e) => {
@@ -324,6 +385,7 @@ switch_side_button.addEventListener("click", (e) => {
   winning_screen.classList.remove("active");
   //clearing the green tiles
   clearGreenTiles();
+  removeAttributes(line);
 });
 
 document.getElementById("ai_game").addEventListener("click", () => {

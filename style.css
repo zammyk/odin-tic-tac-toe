@@ -21,6 +21,10 @@ fourth color = #113f67 */
   align-items: center;
 }
 
+.game{
+  position: relative;
+}
+
 #gameboard_container {
   margin-top: 12vh;
   height: min(60vh, 60vw);
@@ -53,16 +57,6 @@ fourth color = #113f67 */
   background-color: #a2a8d3;
   box-shadow: inset 4px 4px 12px #a2a8d3, inset -4px -4px 12px #38598b;
 }
-
-/* #gameboard_container > div > div {
-  font-size: min(15vh,15vw);
-  position: absolute;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #113f67;
-} */
 
 #landing_page,
 #winner_screen {
@@ -255,4 +249,13 @@ form button {
   #landing_page form div {
     gap: 0.5rem;
   }
+}
+
+#line {
+    position: absolute;
+    height: 48vh;
+    background-color: black;
+    width: 4px;
+    transform: translateX(min(10vh)) translateY(18vh);
+    z-index: 2;
 }

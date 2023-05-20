@@ -361,11 +361,15 @@ for (
       player_turn.textContent = `${currPlayer.name}'s turn`;
       let winner = Game.findWinner(p1, p2);
       if (winner != "") {
-        winning_screen_content.textContent = `Winner is "${winner}"`;
-        winning_screen.classList.add("active");
+        setTimeout(() => {
+          winning_screen_content.textContent = `Winner is "${winner}"`;
+          winning_screen.classList.add("active");
+        }, 2000);
       } else if (Game.over()) {
-        winning_screen_content.textContent = `IT IS A TIE`;
-        winning_screen.classList.add("active");
+        setTimeout(() => {
+          winning_screen_content.textContent = `IT IS A TIE`;
+          winning_screen.classList.add("active");
+        }, 2000);
       }
     });
   }

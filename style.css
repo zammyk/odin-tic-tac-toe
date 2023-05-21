@@ -258,12 +258,25 @@ form button {
   }
 }
 
+@keyframes horizontal {
+  from {background-position: right;}
+  to {background-position: left;}
+}
+@keyframes vertical {
+  from {background-position: bottom;}
+  to {background-position: top;}
+}
+@keyframes diagonal {
+  from {background-position: top;}
+  to {background-position: bottom;}
+}
+
 /* For testing the line-crossing animation */
 /* #line {
     position: absolute;
-    height: 48vh;
-    background-color: black;
-    width: 4px;
-    transform: translateX(min(10vh)) translateY(18vh);
+    height: 4px;
+    width: 48vh;
+    transform: translateX(6vh) translateY(62vh);
+    background: linear-gradient(90deg, black 0%, black 50%, transparent 51%, transparent 100%); background-size: 200% 100%; animation: example 2s;
     z-index: 2;
 } */

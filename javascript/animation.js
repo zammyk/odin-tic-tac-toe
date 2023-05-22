@@ -61,15 +61,15 @@ export default function lineAnimation(i, screenWidth) {
         break;
       case 3:
         line.style =
-          "position: absolute; z-index: 2; height: 48vh; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(10vh) translateY(18vh)";
+          "position: absolute; z-index: 2; height: 48vh; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(9.7vh) translateY(18vh)";
         break;
       case 4:
         line.style =
-          "position: absolute; z-index: 2; height: 48vh; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(30vh) translateY(18vh)";
+          "position: absolute; z-index: 2; height: 48vh; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(29.7vh) translateY(18vh)";
         break;
       case 5:
         line.style =
-          "position: absolute; z-index: 2; height: 48vh; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(50vh) translateY(18vh)";
+          "position: absolute; z-index: 2; height: 48vh; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(49.7vh) translateY(18vh)";
         break;
       case 6:
         line.style =

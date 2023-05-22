@@ -87,7 +87,7 @@
 }
 
 #landing_page form {
-  font-size: 2rem;
+  font-size: 1.9rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -226,10 +226,6 @@ form button {
   .header .player_turn {
     position: unset;
     font-size: 5vh;
-  }
-
-  #landing_page #winner_screen {
-    color: #113f67;
   }
 
   #landing_page form{

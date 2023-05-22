@@ -1,6 +1,8 @@
-const Player = (name, symbol, isAI) => {
+import lineAnimation from "./animation.js";
+
+function Player(name, symbol, isAI) {
   return { name, symbol, isAI };
-};
+}
 
 const Game = (() => {
   let gameboard = [
@@ -16,38 +18,26 @@ const Game = (() => {
     if (cell == null) return p1.isAI || p2.isAI;
     if (gameboard[cell.row][cell.col] != "") return false;
     gameboard[cell.row][cell.col] = player.symbol;
-    let div = document.createElement("div");
-    if (player.symbol == "X") {
-      // div.innerHTML = '<img src="/assets/X.png" alt="X" class="symbol">';
-      cell.innerHTML = '<img src="/assets/X.png" alt="X" class="symbol">';
-    } else if (player.symbol == "O") {
-      // div.innerHTML = '<img src="/assets/O.png" alt="O" class="symbol">';
-      cell.innerHTML = '<img src="/assets/O.png" alt="O" class="symbol">';
-    }
-    // div.textContent = player.symbol;
-    // cell.appendChild(div);
+    player.symbol == "X"
+      ? (cell.innerHTML = '<img src="./assets/X.png" alt="X" class="symbol">')
+      : (cell.innerHTML = '<img src="./assets/O.png" alt="O" class="symbol">');
     return true;
   };
   const switchTurn = (currPlayer, p1, p2) => (currPlayer == p1 ? p2 : p1);
   const findWinner = (p1, p2) => {
-    const screenWidth = window.matchMedia("(max-width: 426px)");
     for (let i = 0; i < 3; i++) {
       if (
         isEqual(gameboard[i][0], gameboard[i][1], gameboard[i][2]) &&
         gameboard[i][0] != ""
       ) {
-        victoryTiles(3 * i, 3 * i + 1, 3 * i + 2);
-        // console.log(i, 0);
-        lineAnimation(i, "horizontal", screenWidth);
+        lineAnimation(i, screenWidth);
         return gameboard[i][0] == p1.symbol ? p1.name : p2.name;
       }
       if (
         isEqual(gameboard[0][i], gameboard[1][i], gameboard[2][i]) &&
         gameboard[0][i] != ""
       ) {
-        victoryTiles(3 * i, 3 * (i + 1), 3 * (i + 2));
-        // console.log(0, i);
-        lineAnimation(i, "vertical", screenWidth);
+        lineAnimation(i + 3, screenWidth);
         return gameboard[0][i] == p1.symbol ? p1.name : p2.name;
       }
     }
@@ -55,18 +45,14 @@ const Game = (() => {
       isEqual(gameboard[0][0], gameboard[1][1], gameboard[2][2]) &&
       gameboard[0][0] != ""
     ) {
-      victoryTiles(0, 4, 8);
-      // console.log("cross");
-      lineAnimation(0, "cross", screenWidth);
+      lineAnimation(6, screenWidth);
       return gameboard[0][0] == p1.symbol ? p1.name : p2.name;
     }
     if (
       isEqual(gameboard[0][2], gameboard[1][1], gameboard[2][0]) &&
       gameboard[0][2] != ""
     ) {
-      victoryTiles(2, 4, 6);
-      // console.log("reverse cross");
-      lineAnimation(2, "cross", screenWidth);
+      lineAnimation(7, screenWidth);
       return gameboard[0][2] == p1.symbol ? p1.name : p2.name;
     }
     return "";
@@ -203,120 +189,31 @@ function nthDivChild(n, container) {
   return null;
 }
 
-function victoryTiles(first, second, third) {
-  gameboard_container
-    .getElementsByTagName("div")
-    [first].classList.add("victory-tile");
-  gameboard_container
-    .getElementsByTagName("div")
-    [second].classList.add("victory-tile");
-  gameboard_container
-    .getElementsByTagName("div")
-    [third].classList.add("victory-tile");
-}
-
-function clearGreenTiles() {
-  const victory_tiles = gameboard_container.querySelectorAll(".victory-tile");
-  victory_tiles.forEach((element) => {
-    element.classList.remove("victory-tile");
-  });
-}
-
-function lineAnimation(i, direction, screenWidth) {
-  if (screenWidth.matches) {
-    if (direction === "horizontal") {
-      switch (i) {
-        case 0:
-          line.style =
-            "position: absolute; z-index: 2; height: 4px; width: 13rem; background: linear-gradient(90deg, black 0%, black 50%, transparent 51%, transparent 100%); background-size: 200% 100%; animation: horizontal 2s; transform: translateX(1rem) translateY(8.1rem)";
-          break;
-        case 1:
-          line.style =
-            "position: absolute; z-index: 2; height: 4px; width: 13rem; background: linear-gradient(90deg, black 0%, black 50%, transparent 51%, transparent 100%); background-size: 200% 100%; animation: horizontal 2s; transform: translateX(1rem) translateY(13.1rem)";
-          break;
-        case 2:
-          line.style =
-            "position: absolute; z-index: 2; height: 4px; width: 13rem; background: linear-gradient(90deg, black 0%, black 50%, transparent 51%, transparent 100%); background-size: 200% 100%; animation: horizontal 2s; transform: translateX(1rem) translateY(18.1rem)";
-          break;
-      }
-    } else if (direction === "vertical") {
-      switch (i) {
-        case 0:
-          line.style =
-            "position: absolute; z-index: 2; height: 13rem; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(2.4rem) translateY(7rem)";
-          break;
-        case 1:
-          line.style =
-            "position: absolute; z-index: 2; height: 13rem; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(7.4rem) translateY(7rem)";
-          break;
-        case 2:
-          line.style =
-            "position: absolute; z-index: 2; height: 13rem; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(12.4rem) translateY(7rem)";
-          break;
-      }
-    } else {
-      switch (i) {
-        case 0:
-          line.style =
-            "position: absolute; z-index: 2; height: 18.2rem; width: 4px; background: linear-gradient(0deg, black 0%, black 50%, transparent 51%, transparent 100%); background-size: 100% 200%; animation: diagonal 2s; transform: translateX(7.5rem) translateY(4.3rem) rotate(135deg);";
-          break;
-        case 2:
-          line.style =
-            "position: absolute; z-index: 2; height: 18.2rem; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(7.5rem) translateY(4.3rem) rotate(45deg);";
-          break;
-      }
-    }
-  } else {
-    if (direction === "horizontal") {
-      switch (i) {
-        case 0:
-          line.style =
-            "position: absolute; z-index: 2; height: 4px; width: 48vh; background: linear-gradient(90deg, black 0%, black 50%, transparent 51%, transparent 100%); background-size: 200% 100%; animation: horizontal 2s; transform: translateX(6vh) translateY(22vh)";
-          break;
-        case 1:
-          line.style =
-            "position: absolute; z-index: 2; height: 4px; width: 48vh; background: linear-gradient(90deg, black 0%, black 50%, transparent 51%, transparent 100%); background-size: 200% 100%; animation: horizontal 2s; transform: translateX(6vh) translateY(42vh)";
-          break;
-        case 2:
-          line.style =
-            "position: absolute; z-index: 2; height: 4px; width: 48vh; background: linear-gradient(90deg, black 0%, black 50%, transparent 51%, transparent 100%); background-size: 200% 100%; animation: horizontal 2s; transform: translateX(6vh) translateY(62vh)";
-          break;
-      }
-    } else if (direction === "vertical") {
-      switch (i) {
-        case 0:
-          line.style =
-            "position: absolute; z-index: 2; height: 48vh; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(10vh) translateY(18vh)";
-          break;
-        case 1:
-          line.style =
-            "position: absolute; z-index: 2; height: 48vh; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(30vh) translateY(18vh)";
-          break;
-        case 2:
-          line.style =
-            "position: absolute; z-index: 2; height: 48vh; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(50vh) translateY(18vh)";
-          break;
-      }
-    } else {
-      switch (i) {
-        case 0:
-          line.style =
-            "position: absolute; z-index: 2; height: 63vh; width: 4px; background: linear-gradient(0deg, black 0%, black 50%, transparent 51%, transparent 100%); background-size: 100% 200%; animation: diagonal 2s; transform: translateX(30vh) translateY(11vh) rotate(135deg);";
-          break;
-        case 2:
-          line.style =
-            "position: absolute; z-index: 2; height: 68vh; width: 4px; background: linear-gradient(0deg, transparent 0%, transparent 50%, black 51%, black 100%); background-size: 100% 200%; animation: vertical 2s; transform: translateX(30vh) translateY(8vh) rotate(45deg);";
-          break;
-      }
+function disableAllChild(node) {
+  for (
+    let child = node.firstChild, counter = 0;
+    child !== null;
+    child = child.nextSibling
+  ) {
+    if (child.tagName == "DIV") {
+      child.style["pointer-events"] = "none";
+      counter++;
     }
   }
 }
 
-const removeAttributes = (line) => {
-  while (line.attributes.length > 0) {
-    line.removeAttribute(line.attributes[0].name);
+function enableAllChild(node) {
+  for (
+    let child = node.firstChild, counter = 0;
+    child !== null;
+    child = child.nextSibling
+  ) {
+    if (child.tagName == "DIV") {
+      child.style["pointer-events"] = "";
+      counter++;
+    }
   }
-};
+}
 
 const gameboard_container = document.getElementById("gameboard_container");
 const winning_screen = document.getElementById("winner_screen");
@@ -329,7 +226,7 @@ const replay_button = document.getElementById("replayButton");
 const submission_button = document.getElementById("submission_button");
 const switch_side_button = document.getElementById("switchSideButton");
 const player_turn = document.querySelector(".player_turn");
-// console.log(winning_screen_content);
+const screenWidth = window.matchMedia("(max-width: 426px)");
 let p1_name = document.getElementById("p1").value;
 let p2_name = document.getElementById("p2").value;
 let p1, p2;
@@ -361,15 +258,14 @@ for (
       player_turn.textContent = `${currPlayer.name}'s turn`;
       let winner = Game.findWinner(p1, p2);
       if (winner != "") {
+        disableAllChild(gameboard_container);
         setTimeout(() => {
           winning_screen_content.textContent = `Winner is "${winner}"`;
           winning_screen.classList.add("active");
         }, 2000);
       } else if (Game.over()) {
-        setTimeout(() => {
-          winning_screen_content.textContent = `IT IS A TIE`;
-          winning_screen.classList.add("active");
-        }, 2000);
+        winning_screen_content.textContent = `IT IS A TIE`;
+        winning_screen.classList.add("active");
       }
     });
   }
@@ -390,10 +286,8 @@ replay_button.addEventListener("click", () => {
   }
   player_turn.textContent = `${currPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
-
-  //clearing the green tiles
-  clearGreenTiles();
-  removeAttributes(line);
+  line.removeAttribute("style");
+  enableAllChild(gameboard_container);
 });
 
 submission_button.addEventListener("click", (e) => {
@@ -433,9 +327,8 @@ switch_side_button.addEventListener("click", (e) => {
   }
   player_turn.textContent = `${currPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
-  //clearing the green tiles
-  clearGreenTiles();
-  removeAttributes(line);
+  line.removeAttribute("style");
+  enableAllChild(gameboard_container);
 });
 
 document.getElementById("ai_game").addEventListener("click", () => {

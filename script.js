@@ -359,10 +359,8 @@ for (
           winning_screen.classList.add("active");
         }, 2000);
       } else if (Game.over()) {
-        setTimeout(() => {
-          winning_screen_content.textContent = `IT IS A TIE`;
-          winning_screen.classList.add("active");
-        }, 2000);
+        winning_screen_content.textContent = `IT IS A TIE`;
+        winning_screen.classList.add("active");
       }
     });
   }

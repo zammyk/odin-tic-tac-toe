@@ -16,16 +16,9 @@ const Game = (() => {
     if (cell == null) return p1.isAI || p2.isAI;
     if (gameboard[cell.row][cell.col] != "") return false;
     gameboard[cell.row][cell.col] = player.symbol;
-    let div = document.createElement("div");
-    if (player.symbol == "X") {
-      // div.innerHTML = '<img src="/assets/X.png" alt="X" class="symbol">';
-      cell.innerHTML = '<img src="/assets/X.png" alt="X" class="symbol">';
-    } else if (player.symbol == "O") {
-      // div.innerHTML = '<img src="/assets/O.png" alt="O" class="symbol">';
-      cell.innerHTML = '<img src="/assets/O.png" alt="O" class="symbol">';
-    }
-    // div.textContent = player.symbol;
-    // cell.appendChild(div);
+    player.symbol == "X"
+      ? (cell.innerHTML = '<img src="./assets/X.png" alt="X" class="symbol">')
+      : (cell.innerHTML = '<img src="./assets/O.png" alt="O" class="symbol">');
     return true;
   };
   const switchTurn = (currPlayer, p1, p2) => (currPlayer == p1 ? p2 : p1);

@@ -189,6 +189,32 @@ function nthDivChild(n, container) {
   return null;
 }
 
+function disableAllChild(node) {
+  for (
+    let child = node.firstChild, counter = 0;
+    child !== null;
+    child = child.nextSibling
+  ) {
+    if (child.tagName == "DIV") {
+      child.style["pointer-events"] = "none";
+      counter++;
+    }
+  }
+}
+
+function enableAllChild(node) {
+  for (
+    let child = node.firstChild, counter = 0;
+    child !== null;
+    child = child.nextSibling
+  ) {
+    if (child.tagName == "DIV") {
+      child.style["pointer-events"] = "";
+      counter++;
+    }
+  }
+}
+
 const gameboard_container = document.getElementById("gameboard_container");
 const winning_screen = document.getElementById("winner_screen");
 const landing_page = document.getElementById("landing_page");
@@ -232,6 +258,7 @@ for (
       player_turn.textContent = `${currPlayer.name}'s turn`;
       let winner = Game.findWinner(p1, p2);
       if (winner != "") {
+        disableAllChild(gameboard_container);
         setTimeout(() => {
           winning_screen_content.textContent = `Winner is "${winner}"`;
           winning_screen.classList.add("active");
@@ -260,6 +287,7 @@ replay_button.addEventListener("click", () => {
   player_turn.textContent = `${currPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
   line.removeAttribute("style");
+  enableAllChild(gameboard_container);
 });
 
 submission_button.addEventListener("click", (e) => {
@@ -300,6 +328,7 @@ switch_side_button.addEventListener("click", (e) => {
   player_turn.textContent = `${currPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
   line.removeAttribute("style");
+  enableAllChild(gameboard_container);
 });
 
 document.getElementById("ai_game").addEventListener("click", () => {

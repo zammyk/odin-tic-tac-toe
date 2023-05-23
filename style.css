@@ -3,13 +3,8 @@
   margin: 0;
 }
 
-/* first color = #e7eaf6
-second color = #a2a8d3
-third color = #38598b
-fourth color = #113f67 */
-
 #main {
-  background-color: #e7eaf6;
+  background-color: white;
   height: 100vh;
   width: 100vw;
   position: absolute;
@@ -19,6 +14,10 @@ fourth color = #113f67 */
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.game{
+  position: relative;
 }
 
 #gameboard_container {
@@ -38,11 +37,17 @@ fourth color = #113f67 */
   width: auto;
   border: #113f67 1.5px solid;
   border-radius: 1rem;
-  /* display: flex;
+  display: flex;
   align-items: center;
-  justify-content: center; */
+  justify-content: center;
   position: relative;
-  background-color: #a2a8d3;
+  background-color: #f4f7f7;
+  background-image: linear-gradient(43deg, #f4f7f7 0%, #e8e2e2 50%, #e2dad3 100%);
+
+}
+
+#gameboard_container > .victory-tile {
+  background-color: #11d479;
 }
 
 #gameboard_container > div:active {
@@ -50,19 +55,8 @@ fourth color = #113f67 */
   box-shadow: inset 4px 4px 12px #a2a8d3, inset -4px -4px 12px #38598b;
 }
 
-#gameboard_container > div > div {
-  font-size: min(15vh,15vw);
-  position: absolute;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #113f67;
-}
-
 #landing_page,
 #winner_screen {
-  background-image: url("");
   height: 100%;
   width: 100%;
 
@@ -73,7 +67,7 @@ fourth color = #113f67 */
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #113f67;
+  color: black;
 }
 
 #winner_screen {
@@ -93,19 +87,36 @@ fourth color = #113f67 */
 }
 
 #landing_page form {
-  background-color: #a2a8d3;
-  font-size: 2rem;
+  font-size: 1.9rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 17rem;
   width: 30rem;
+  background-color: white;
+  box-shadow: 0px 0px 60px 5px rgba(0, 0, 0, 0.4);
   border: 2.5px black solid;
   border-radius: 1rem;
   gap: 1rem;
   padding: 2rem;
   box-sizing: border-box;
+}
+
+input[type="radio"] {
+  display: none;
+}
+form div input[id="two_player_game"]:checked + label{
+  background-color: #1e90ff;
+  border-radius: 6px;
+  width: 50%;
+  text-align: center;
+}
+form div input[id="ai_game"]:checked + label{
+  background-color: #1e90ff;
+  border-radius: 6px;
+  width: 50%;
+  text-align: center;
 }
 
 #landing_page form > div {
@@ -150,14 +161,13 @@ input[type="text"]:focus {
 .header {
   position: relative;
   top: 0;
-
   height: 15vh;
   width: 100vw;
-  background-color: #a2a8d3;
+  background-color: #e21b5a;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #113f67;
+  color: black;
 }
 
 .header #page_heading {
@@ -172,23 +182,25 @@ input[type="text"]:focus {
 
 button {
   width: 200px;
+  height: 70px;
   font-size: 1.5rem;
-  color: #113f67;
-  background-image: linear-gradient(135deg, #d0d7f3 40%, #b3d2ee);
-  border-radius: 0.5rem;
-  transition: all .3s;
-  box-shadow: 6px 6px 12px, -6px -6px 12px;
+  color: white;
+  background-color: #1e90ff;
+  border-radius: 1rem;
+  transition: all .5s;
+  /* box-shadow: 6px 6px 12px, -6px -6px 12px; */
+  box-shadow: 0 0.625em 1em 0 rgba(30, 143, 255, 0.35);
   cursor: pointer;
 }
 
 .button:hover {
   transition: 0.4s;
   border: 2px dashed black;
-  color: #11d479;
+  color: black;
 }
 
 .button:active {
-  background-color: #a2a8d3;
+  background-color: #1e90ff;
   box-shadow: inset 4px 4px 12px #a2a8d3, inset -4px -4px 12px #38598b;
 }
 
@@ -196,7 +208,7 @@ form button {
   margin-top: 20px;
 }
 
-/* Extra small devices (phones, 600px and down) */
+/* Extra small devices (phones, 768px and down) */
 @media screen and (max-width: 768px) {
   .header {
     display: flex;
@@ -204,23 +216,16 @@ form button {
     justify-content: space-around;
     height: 15vh;
     width: 100vw;
-    color: #113f67;
   }
 
   .header #page_heading {
     height: 7vh;
     font-size: 8vh;
-    color: #113f67;
   }
   
   .header .player_turn {
     position: unset;
     font-size: 5vh;
-    color: #113f67;
-  }
-
-  #landing_page #winner_screen {
-    color: #113f67;
   }
 
   #landing_page form{
@@ -252,3 +257,33 @@ form button {
     gap: 0.5rem;
   }
 }
+
+@media screen and (max-width: 426px) {
+  #gameboard_container {
+     height: 15rem;
+     width: 15rem;
+  }
+}
+
+@keyframes horizontal {
+  from {background-position: right;}
+  to {background-position: left;}
+}
+@keyframes vertical {
+  from {background-position: bottom;}
+  to {background-position: top;}
+}
+@keyframes diagonal {
+  from {background-position: top;}
+  to {background-position: bottom;}
+}
+
+/* For testing the line-crossing animation */
+/* #line {
+    position: absolute;
+    height: 4px;
+    width: 48vh;
+    transform: translateX(6vh) translateY(62vh);
+    background: linear-gradient(90deg, black 0%, black 50%, transparent 51%, transparent 100%); background-size: 200% 100%; animation: example 2s;
+    z-index: 2;
+} */

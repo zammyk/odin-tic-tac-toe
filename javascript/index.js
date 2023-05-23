@@ -1,6 +1,8 @@
-const Player = (name, symbol, isAI) => {
+import lineAnimation from "./animation.js";
+
+function Player(name, symbol, isAI) {
   return { name, symbol, isAI };
-};
+}
 
 const Game = (() => {
   let gameboard = [
@@ -16,9 +18,9 @@ const Game = (() => {
     if (cell == null) return p1.isAI || p2.isAI;
     if (gameboard[cell.row][cell.col] != "") return false;
     gameboard[cell.row][cell.col] = player.symbol;
-    let div = document.createElement("div");
-    div.textContent = player.symbol;
-    cell.appendChild(div);
+    player.symbol == "X"
+      ? (cell.innerHTML = '<img src="./assets/X.png" alt="X" class="symbol">')
+      : (cell.innerHTML = '<img src="./assets/O.png" alt="O" class="symbol">');
     return true;
   };
   const switchTurn = (currPlayer, p1, p2) => (currPlayer == p1 ? p2 : p1);
@@ -27,24 +29,32 @@ const Game = (() => {
       if (
         isEqual(gameboard[i][0], gameboard[i][1], gameboard[i][2]) &&
         gameboard[i][0] != ""
-      )
+      ) {
+        lineAnimation(i, screenWidth);
         return gameboard[i][0] == p1.symbol ? p1.name : p2.name;
+      }
       if (
         isEqual(gameboard[0][i], gameboard[1][i], gameboard[2][i]) &&
         gameboard[0][i] != ""
-      )
+      ) {
+        lineAnimation(i + 3, screenWidth);
         return gameboard[0][i] == p1.symbol ? p1.name : p2.name;
+      }
     }
     if (
       isEqual(gameboard[0][0], gameboard[1][1], gameboard[2][2]) &&
       gameboard[0][0] != ""
-    )
+    ) {
+      lineAnimation(6, screenWidth);
       return gameboard[0][0] == p1.symbol ? p1.name : p2.name;
+    }
     if (
       isEqual(gameboard[0][2], gameboard[1][1], gameboard[2][0]) &&
       gameboard[0][2] != ""
-    )
+    ) {
+      lineAnimation(7, screenWidth);
       return gameboard[0][2] == p1.symbol ? p1.name : p2.name;
+    }
     return "";
   };
   const AI_child = () => {
@@ -179,9 +189,36 @@ function nthDivChild(n, container) {
   return null;
 }
 
+function disableAllChild(node) {
+  for (
+    let child = node.firstChild, counter = 0;
+    child !== null;
+    child = child.nextSibling
+  ) {
+    if (child.tagName == "DIV") {
+      child.style["pointer-events"] = "none";
+      counter++;
+    }
+  }
+}
+
+function enableAllChild(node) {
+  for (
+    let child = node.firstChild, counter = 0;
+    child !== null;
+    child = child.nextSibling
+  ) {
+    if (child.tagName == "DIV") {
+      child.style["pointer-events"] = "";
+      counter++;
+    }
+  }
+}
+
 const gameboard_container = document.getElementById("gameboard_container");
 const winning_screen = document.getElementById("winner_screen");
 const landing_page = document.getElementById("landing_page");
+const line = document.getElementById("line");
 const winning_screen_content = document.querySelector(
   "#winner_screen .content"
 );
@@ -189,7 +226,7 @@ const replay_button = document.getElementById("replayButton");
 const submission_button = document.getElementById("submission_button");
 const switch_side_button = document.getElementById("switchSideButton");
 const player_turn = document.querySelector(".player_turn");
-console.log(winning_screen_content);
+const screenWidth = window.matchMedia("(max-width: 426px)");
 let p1_name = document.getElementById("p1").value;
 let p2_name = document.getElementById("p2").value;
 let p1, p2;
@@ -221,8 +258,11 @@ for (
       player_turn.textContent = `${currPlayer.name}'s turn`;
       let winner = Game.findWinner(p1, p2);
       if (winner != "") {
-        winning_screen_content.textContent = `Winner is "${winner}"`;
-        winning_screen.classList.add("active");
+        disableAllChild(gameboard_container);
+        setTimeout(() => {
+          winning_screen_content.textContent = `Winner is "${winner}"`;
+          winning_screen.classList.add("active");
+        }, 2000);
       } else if (Game.over()) {
         winning_screen_content.textContent = `IT IS A TIE`;
         winning_screen.classList.add("active");
@@ -246,6 +286,8 @@ replay_button.addEventListener("click", () => {
   }
   player_turn.textContent = `${currPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
+  line.removeAttribute("style");
+  enableAllChild(gameboard_container);
 });
 
 submission_button.addEventListener("click", (e) => {
@@ -285,6 +327,8 @@ switch_side_button.addEventListener("click", (e) => {
   }
   player_turn.textContent = `${currPlayer.name}'s turn`;
   winning_screen.classList.remove("active");
+  line.removeAttribute("style");
+  enableAllChild(gameboard_container);
 });
 
 document.getElementById("ai_game").addEventListener("click", () => {
